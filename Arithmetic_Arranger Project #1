@@ -1,0 +1,61 @@
+def arithmetic_arranger(problems, show_answers=False):
+
+    top_line = []
+    bottom_line = []
+    dashes_line = []
+    solutions_line = []
+
+# 1. Problem Limit is 5
+    if len(problems) > 5:
+        return 'Error: Too many problems.'
+
+    for problem in problems:  
+        parts = problem.split()
+        operator = parts.pop(1)
+        num_1 = parts[0]
+        num_2 = parts[1]
+        spaces = ''
+
+# 2. Check if appropriate operator 
+        if operator not in ['+', '-']:
+            return "Error: Operator must be '+' or '-'."
+
+# 3. Check if operands are digits 
+        for number in parts:
+            if not number.isdigit():
+                return 'Error: Numbers must only contain digits.'
+# 4. Check if number length is 4 or less
+            elif len(number) > 4:
+                return 'Error: Numbers cannot be more than four digits.'
+
+# 5. Proper operand and operator spacing 
+# 6. Right alignment 
+# 8. Dashes at bottom of each problem
+
+        width = max(len(num_1), len(num_2)) + 2
+        top = num_1.rjust(width)
+        bottom = operator + num_2.rjust(width - 1) 
+        dashes = '-' * width
+
+        top_line.append(top)
+        bottom_line.append(bottom)
+        dashes_line.append(dashes)
+
+        # Solutions
+        if show_answers:
+            if operator == '+':
+                solution = str(int(num_1) + int(num_2))
+            else:
+                solution = str(int(num_1) - int(num_2))
+            soln_format = solution.rjust(width)
+            solutions_line.append(soln_format)
+
+# 7. Four spaces between each problem
+    arranged = '    '.join(top_line) + '\n' + \
+               '    '.join(bottom_line) + '\n' + \
+               '    '.join(dashes_line)
+
+    if show_answers:
+        arranged += '\n' + '    '.join(solutions_line)
+
+    return arranged
